@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparative Challenge | A2 English Game</title>
+
+<style>
+:root{
+  --bg:#08142b;
+  --bg2:#101f46;
+  --card:#132554;
+  --text:#f7fbff;
+  --muted:#b7c6e8;
+  --accent:#5eead4;
+  --accent2:#60a5fa;
+  --gold:#fbbf24;
+  --good:#34d399;
+  --bad:#fb7185;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Arial, Helvetica, sans-serif;
+  color:var(--text);
+
+  background:
+  radial-gradient(circle at 10% 10%, rgba(96,165,250,.22), transparent 28%),
+  radial-gradient(circle at 90% 20%, rgba(94,234,212,.17), transparent 28%),
+  linear-gradient(145deg,var(--bg),var(--bg2));
+}
+
+.app{
+  width:min(1100px,94%);
+  margin:auto;
+  padding:30px 0 50px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:900;
+}
+
+.logo{
+  width:50px;
+  height:50px;
+  border-radius:16px;
+
+  display:grid;
+  place-items:center;
+
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+
+  color:#07152a;
+  font-size:24px;
+}
+
+.brand small{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  letter-spacing:1px;
+}
+
+.pill{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.1);
+  padding:10px 15px;
+  border-radius:999px;
+  color:var(--muted);
+  font-weight:bold;
+}
+
+.hero{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:22px;
+}
+
+.panel{
+  background:linear-gradient(
+    180deg,
+    rgba(255,255,255,.08),
+    rgba(255,255,255,.04)
+  );
+
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:28px;
+
+  box-shadow:0 18px 45px rgba(0,0,0,.28);
+}
+
+.intro{
+  padding:30px;
+}
+
+.eyebrow{
+  display:inline-block;
+
+  color:#d9f8f2;
+
+  background:rgba(94,234,212,.12);
+
+  border:1px solid rgba(94,234,212,.2);
+
+  padding:7px 12px;
+
+  border-radius:999px;
+
+  font-size:13px;
+
+  font-weight:900;
+}
+
+h1{
+  font-size:clamp(2rem,5vw,4rem);
+  line-height:1;
+  margin:18px 0;
+}
+
+.gradient{
+  background:linear-gradient(
+    90deg,
+    #ffffff,
+    #a7f3d0,
+    #93c5fd
+  );
+
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.intro p{
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.rules{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:20px 0;
+}
+
+.rule{
+  padding:10px 12px;
+
+  background:rgba(255,255,255,.06);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  border-radius:14px;
+
+  color:#dbeafe;
+
+  font-weight:bold;
+}
+
+button{
+  border:none;
+
+  cursor:pointer;
+
+  font-weight:900;
+
+  transition:.2s;
+}
+
+.primary{
+  padding:15px 22px;
+
+  border-radius:16px;
+
+  background:linear-gradient(
+    135deg,
+    var(--accent2),
+    var(--accent)
+  );
+
+  color:#041321;
+
+  font-size:16px;
+}
+
+.primary:hover{
+  transform:translateY(-2px);
+}
+
+.secondary{
+  padding:12px 18px;
+
+  border-radius:14px;
+
+  background:rgba(255,255,255,.08);
+
+  border:1px solid rgba(255,255,255,.12);
+
+  color:white;
+}
+
+.grammar{
+  padding:24px;
+}
+
+.grammar h3{
+  margin-top:0;
+}
+
+.mini-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0 7px;
+}
+
+.mini-table td{
+  background:rgba(255,255,255,.06);
+  padding:10px;
+}
+
+.mini-table td:first-child{
+  color:#dbeafe;
+}
+
+.mini-table td:last-child{
+  text-align:right;
+  color:#a7f3d0;
+  font-weight:bold;
+}
+
+.note{
+  margin-top:14px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.game{
+  display:none;
+  margin-top:22px;
+  padding:25px;
+}
+
+.game.active{
+  display:block;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.stat{
+  background:rgba(255,255,255,.06);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  border-radius:16px;
+
+  padding:12px;
+
+  text-align:center;
+}
+
+.stat .n{
+  font-size:22px;
+  font-weight:900;
+}
+
+.stat .l{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+}
+
+.progress-wrap{
+  height:12px;
+
+  background:rgba(255,255,255,.08);
+
+  border-radius:999px;
+
+  overflow:hidden;
+
+  margin-bottom:20px;
+}
+
+.progress{
+  width:0;
+
+  height:100%;
+
+  background:linear-gradient(
+    90deg,
+    var(--accent2),
+    var(--accent),
+    var(--gold)
+  );
+
+  transition:.3s;
+}
+
+.question-card{
+  padding:26px;
+
+  border-radius:24px;
+
+  background:#10234c;
+
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.q-meta{
+  display:flex;
+  justify-content:space-between;
+
+  color:var(--muted);
+
+  font-size:13px;
+
+  margin-bottom:12px;
+}
+
+.question{
+  font-size:clamp(1.4rem,3vw,2rem);
+  font-weight:900;
+  line-height:1.3;
+
+  margin-bottom:15px;
+}
+
+.hint{
+  color:#bfdbfe;
+
+  font-size:14px;
+
+  margin-bottom:18px;
+}
+
+.options{
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:12px;
+}
+
+.option{
+  text-align:left;
+
+  padding:16px;
+
+  min-height:60px;
+
+  border-radius:16px;
+
+  background:rgba(255,255,255,.07);
+
+  border:1px solid rgba(255,255,255,.1);
+
+  color:white;
+
+  font-size:15px;
+}
+
+.option:hover:not(:disabled){
+  transform:translateY(-2px);
+
+  background:rgba(255,255,255,.12);
+}
+
+.option.correct{
+  background:rgba(52,211,153,.18);
+
+  border:2px solid var(--good);
+}
+
+.option.wrong{
+  background:rgba(251,113,133,.18);
+
+  border:2px solid var(--bad);
+}
+
+.option:disabled{
+  cursor:default;
+}
+
+.feedback{
+  min-height:55px;
+
+  margin-top:15px;
+
+  color:var(--muted);
+
+  line-height:1.5;
+}
+
+.feedback.show{
+  padding:14px;
+
+  border-radius:15px;
+
+  background:rgba(255,255,255,.05);
+
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.feedback strong{
+  color:white;
+}
+
+.actions{
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:12px;
+
+  margin-top:18px;
+}
+
+#nextBtn{
+  display:none;
+}
+
+.result{
+  display:none;
+
+  margin-top:22px;
+
+  padding:40px 25px;
+
+  text-align:center;
+}
+
+.result.active{
+  display:block;
+}
+
+.trophy{
+  font-size:70px;
+}
+
+.result h2{
+  font-size:36px;
+
+  margin:10px 0;
+}
+
+.score-big{
+  font-size:60px;
+
+  font-weight:900;
+
+  margin:15px 0;
+
+  background:linear-gradient(
+    90deg,
+    #fff,
+    #a7f3d0,
+    #93c5fd
+  );
+
+  -webkit-background-clip:text;
+
+  background-clip:text;
+
+  color:transparent;
+}
+
+.result p{
+  max-width:600px;
+
+  margin:0 auto 22px;
+
+  color:var(--muted);
+
+  line-height:1.6;
+}
+
+.footer{
+  text-align:center;
+
+  color:#7f93bd;
+
+  font-size:12px;
+
+  margin-top:20px;
+}
+
+@media(max-width:780px){
+
+  .hero{
+    grid-template-columns:1fr;
+  }
+
+  .pill{
+    display:none;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .options{
+    grid-template-columns:1fr;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="topbar">
+
+<div class="brand">
+
+<div class="logo">
+⚡
+</div>
+
+<div>
+
+COMPARATIVE CHALLENGE
+
+<small>
+A2 ENGLISH GRAMMAR GAME
+</small>
+
+</div>
+
+</div>
+
+<div class="pill">
+🎯 25 Random Questions
+</div>
+
+</div>
+
+
+<section class="hero" id="home">
+
+<div class="panel intro">
+
+<div class="eyebrow">
+🏆 Grammar Mission
+</div>
+
+<h1>
+
+Become a
+
+<span class="gradient">
+Comparative Master
+</span>
+
+</h1>
+
+<p>
+
+Choose the correct comparative form, complete sentences and test your English grammar.
+
+The answers are randomized every time you play.
+
+</p>
+
+
+<div class="rules">
+
+<div class="rule">
+❤️ 3 lives
+</div>
+
+<div class="rule">
+🔥 Streak bonus
+</div>
+
+<div class="rule">
+💡 Instant feedback
+</div>
+
+<div class="rule">
+🔀 Random answers
+</div>
+
+</div>
+
+
+<button
+class="primary"
+onclick="startGame()">
+
+Start Game →
+
+</button>
+
+</div>
+
+
+
+<div class="panel grammar">
+
+<h3>
+Quick Grammar Guide
+</h3>
+
+<table class="mini-table">
+
+<tr>
+<td>short</td>
+<td>shorter</td>
+</tr>
+
+<tr>
+<td>old</td>
+<td>older</td>
+</tr>
+
+<tr>
+<td>funny</td>
+<td>funnier</td>
+</tr>
+
+<tr>
+<td>big</td>
+<td>bigger</td>
+</tr>
+
+<tr>
+<td>handsome</td>
+<td>more handsome</td>
+</tr>
+
+<tr>
+<td>good</td>
+<td>better</td>
+</tr>
+
+<tr>
+<td>bad</td>
+<td>worse</td>
+</tr>
+
+<tr>
+<td>much / many</td>
+<td>more</td>
+</tr>
+
+<tr>
+<td>far</td>
+<td>farther / further</td>
+</tr>
+
+</table>
+
+
+<div class="note">
+
+<b>Remember:</b>
+
+Short adjectives usually take
+
+<b>-er</b>.
+
+Long adjectives usually use
+
+<b>more</b>.
+
+Some comparative forms are irregular.
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section
+class="panel game"
+id="game">
+
+<div class="stats">
+
+<div class="stat">
+
+<div
+class="n"
+id="score">
+
+0
+
+</div>
+
+<div class="l">
+Score
+</div>
+
+</div>
+
+
+
+<div class="stat">
+
+<div
+class="n"
+id="streak">
+
+0 🔥
+
+</div>
+
+<div class="l">
+Streak
+</div>
+
+</div>
+
+
+
+<div class="stat">
+
+<div
+class="n"
+id="lives">
+
+❤️❤️❤️
+
+</div>
+
+<div class="l">
+Lives
+</div>
+
+</div>
+
+
+
+<div class="stat">
+
+<div
+class="n"
+id="counter">
+
+1/25
+
+</div>
+
+<div class="l">
+Question
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="progress-wrap">
+
+<div
+class="progress"
+id="progress">
+
+</div>
+
+</div>
+
+
+
+<div class="question-card">
+
+<div class="q-meta">
+
+<span>
+
+Choose the correct answer
+
+</span>
+
+<span>
+A2
+</span>
+
+</div>
+
+
+<div
+class="question"
+id="question">
+
+</div>
+
+
+<div
+class="hint"
+id="hint">
+
+</div>
+
+
+<div
+class="options"
+id="options">
+
+</div>
+
+
+<div
+class="feedback"
+id="feedback">
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="secondary"
+onclick="restartGame()">
+
+↻ Restart
+
+</button>
+
+
+<button
+class="primary"
+id="nextBtn"
+onclick="nextQuestion()">
+
+Next →
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section
+class="panel result"
+id="result">
+
+<div class="trophy">
+🏆
+</div>
+
+<h2>
+Mission Complete!
+</h2>
+
+<div
+class="score-big"
+id="finalScore">
+
+0
+
+</div>
+
+<p
+id="resultText">
+
+</p>
+
+
+<button
+class="primary"
+onclick="startGame()">
+
+Play Again 🔄
+
+</button>
+
+</section>
+
+
+<div class="footer">
+
+Comparative Form • A2 English • Interactive Practice
+
+</div>
+
+</div>
+
+
+<script>
+
+const bank = [
+
+{
+q:"What is the comparative form of “short”?",
+a:"shorter",
+d:["more short","shortest","shortier"],
+e:"For most short adjectives, add -er: short → shorter."
+},
+
+{
+q:"What is the comparative form of “old”?",
+a:"older",
+d:["more old","oldest","oldder"],
+e:"Old is a short adjective: old → older."
+},
+
+{
+q:"What is the comparative form of “funny”?",
+a:"funnier",
+d:["more funny","funnyer","funnest"],
+e:"Change y to i and add -er: funny → funnier."
+},
+
+{
+q:"What is the comparative form of “big”?",
+a:"bigger",
+d:["biger","more big","biggest"],
+e:"Double the final consonant: big → bigger."
+},
+
+{
+q:"What is the comparative form of “handsome”?",
+a:"more handsome",
+d:["handsomer","most handsome","more handsomer"],
+e:"Longer adjectives commonly use more."
+},
+
+{
+q:"What is the comparative form of “good”?",
+a:"better",
+d:["gooder","more good","best"],
+e:"Good is irregular: good → better."
+},
+
+{
+q:"What is the comparative form of “bad”?",
+a:"worse",
+d:["badder","more bad","worst"],
+e:"Bad is irregular: bad → worse."
+},
+
+{
+q:"What is the comparative form of “many”?",
+a:"more",
+d:["manyer","most","mucher"],
+e:"Many becomes more."
+},
+
+{
+q:"What is a correct comparative form of “far”?",
+a:"farther",
+d:["farrer","more far","farthest"],
+e:"Far can become farther or further."
+},
+
+{
+q:"My brother is ___ than me.",
+a:"taller",
+d:["more tall","tallest","taller than"],
+e:"Tall → taller."
+},
+
+{
+q:"This bag is ___ than that one.",
+a:"cheaper",
+d:["more cheap","cheapier","cheapest"],
+e:"Cheap → cheaper."
+},
+
+{
+q:"A car is usually ___ than a bicycle.",
+a:"faster",
+d:["fastest","more fast","fastier"],
+e:"Fast → faster."
+},
+
+{
+q:"Today is ___ than yesterday.",
+a:"hotter",
+d:["hoter","more hot","hottest"],
+e:"Hot → hotter."
+},
+
+{
+q:"This exercise is ___ than the last one.",
+a:"easier",
+d:["more easy","easyer","easiest"],
+e:"Easy → easier."
+},
+
+{
+q:"Math is ___ for me than history.",
+a:"more difficult",
+d:[
+"difficulter",
+"most difficult",
+"more difficulter"
+],
+e:"Difficult uses more: more difficult."
+},
+
+{
+q:"My new phone is ___ than my old phone.",
+a:"more expensive",
+d:[
+"expensiver",
+"most expensive",
+"more expensiver"
+],
+e:"Use more with expensive."
+},
+
+{
+q:"This book is ___ than the movie.",
+a:"more interesting",
+d:[
+"interestinger",
+"most interesting",
+"more interestinger"
+],
+e:"Interesting uses more."
+},
+
+{
+q:"Your answer is ___ than mine.",
+a:"better",
+d:["gooder","more good","best"],
+e:"Good → better."
+},
+
+{
+q:"The weather is ___ today than yesterday.",
+a:"worse",
+d:["badder","more bad","worst"],
+e:"Bad → worse."
+},
+
+{
+q:"Lima is ___ from my town than Piura.",
+a:"farther",
+d:["more far","farest","far"],
+e:"Far → farther / further."
+},
+
+{
+q:"A train carries ___ people than a car.",
+a:"more",
+d:["many","most","manyer"],
+e:"Many → more."
+},
+
+{
+q:"This street is ___ than the main road.",
+a:"narrower",
+d:[
+"more narrowest",
+"narrowest",
+"narrower than"
+],
+e:"Narrow → narrower."
+},
+
+{
+q:"My room is ___ than my sister’s room.",
+a:"cleaner",
+d:["more clean","cleanest","cleanier"],
+e:"Clean → cleaner."
+},
+
+{
+q:"The blue whale is ___ than a dolphin.",
+a:"bigger",
+d:["more big","biger","biggest"],
+e:"Big → bigger."
+},
+
+{
+q:"This sofa is ___ than that chair.",
+a:"more comfortable",
+d:[
+"comfortabler",
+"most comfortable",
+"more comfortabler"
+],
+e:"Comfortable uses more."
+},
+
+{
+q:"Choose the correct sentence.",
+a:"My house is bigger than yours.",
+d:[
+"My house is more big than yours.",
+"My house is biggest than yours.",
+"My house is bigger that yours."
+],
+e:"Use comparative + than."
+},
+
+{
+q:"Choose the correct sentence.",
+a:"This test is easier than the last one.",
+d:[
+"This test is more easy than the last one.",
+"This test is easyer than the last one.",
+"This test is easiest than the last one."
+],
+e:"Easy becomes easier."
+},
+
+{
+q:"Choose the correct sentence.",
+a:"Sara is more patient than Tom.",
+d:[
+"Sara is patienter than Tom.",
+"Sara is most patient than Tom.",
+"Sara is more patienter than Tom."
+],
+e:"Patient commonly uses more."
+},
+
+{
+q:"Which form is NOT correct?",
+a:"more better",
+d:[
+"better",
+"worse",
+"funnier"
+],
+e:"Never use more better. Better is already comparative."
+},
+
+{
+q:"Which pair is correct?",
+a:"happy → happier",
+d:[
+"happy → happyer",
+"happy → more happier",
+"happy → happiest"
+],
+e:"Change y to i and add -er."
+}
+
+];
+
+
+let questions = [];
+
+let current = 0;
+
+let score = 0;
+
+let streak = 0;
+
+let lives = 3;
+
+let answered = false;
+
+
+
+function shuffle(array){
+
+let arr = [...array];
+
+for(
+let i = arr.length - 1;
+i > 0;
+i--
+){
+
+let j =
+Math.floor(
+Math.random() * (i + 1)
+);
+
+[
+arr[i],
+arr[j]
+]
+=
+[
+arr[j],
+arr[i]
+];
+
+}
+
+return arr;
+
+}
+
+
+
+function startGame(){
+
+questions =
+shuffle(bank).slice(0,25);
+
+current = 0;
+
+score = 0;
+
+streak = 0;
+
+lives = 3;
+
+answered = false;
+
+
+document
+.getElementById("home")
+.style.display = "none";
+
+
+document
+.getElementById("result")
+.classList.remove("active");
+
+
+document
+.getElementById("game")
+.classList.add("active");
+
+
+renderQuestion();
+
+}
+
+
+
+function restartGame(){
+
+startGame();
+
+}
+
+
+
+function renderQuestion(){
+
+answered = false;
+
+let item =
+questions[current];
+
+
+document
+.getElementById("question")
+.textContent =
+item.q;
+
+
+document
+.getElementById("hint")
+.textContent =
+"💡 Read carefully before choosing.";
+
+
+document
+.getElementById("feedback")
+.className =
+"feedback";
+
+
+document
+.getElementById("feedback")
+.innerHTML =
+"";
+
+
+document
+.getElementById("nextBtn")
+.style.display =
+"none";
+
+
+let options =
+shuffle(
+[
+item.a,
+...item.d
+]
+);
+
+
+let container =
+document
+.getElementById("options");
+
+
+container.innerHTML =
+"";
+
+
+options.forEach(
+option => {
+
+let button =
+document.createElement("button");
+
+button.className =
+"option";
+
+button.textContent =
+option;
+
+button.onclick =
+() =>
+choose(
+button,
+option,
+item
+);
+
+container.appendChild(
+button
+);
+
+}
+);
+
+
+updateStats();
+
+}
+
+
+
+function choose(
+button,
+option,
+item
+){
+
+if(answered)
+return;
+
+answered = true;
+
+
+let buttons =
+[
+...document
+.querySelectorAll(".option")
+];
+
+
+buttons.forEach(
+b => b.disabled = true
+);
+
+
+let feedback =
+document
+.getElementById("feedback");
+
+
+feedback.classList.add(
+"show"
+);
+
+
+if(
+option === item.a
+){
+
+button.classList.add(
+"correct"
+);
+
+streak++;
+
+score +=
+100 +
+Math.min(
+streak * 10,
+50
+);
+
+
+feedback.innerHTML =
+"✅ <strong>Correct!</strong> "
++
+item.e;
+
+}
+else
+{
+
+button.classList.add(
+"wrong"
+);
+
+
+let correctButton =
+buttons.find(
+b =>
+b.textContent === item.a
+);
+
+
+if(correctButton)
+correctButton.classList.add(
+"correct"
+);
+
+
+streak = 0;
+
+lives =
+Math.max(
+0,
+lives - 1
+);
+
+
+feedback.innerHTML =
+"❌ <strong>Not quite.</strong> Correct answer: <strong>"
++
+item.a
++
+"</strong>. "
++
+item.e;
+
+}
+
+
+updateStats();
+
+
+document
+.getElementById("nextBtn")
+.style.display =
+"inline-block";
+
+}
+
+
+
+function nextQuestion(){
+
+if(
+current <
+questions.length - 1
+){
+
+current++;
+
+renderQuestion();
+
+}
+else
+{
+
+finishGame();
+
+}
+
+}
+
+
+
+function updateStats(){
+
+document
+.getElementById("score")
+.textContent =
+score;
+
+
+document
+.getElementById("streak")
+.textContent =
+streak + " 🔥";
+
+
+document
+.getElementById("lives")
+.textContent =
+"❤️".repeat(lives)
++
+"🖤".repeat(
+3 - lives
+);
+
+
+document
+.getElementById("counter")
+.textContent =
+(current + 1)
++
+"/"
++
+questions.length;
+
+
+document
+.getElementById("progress")
+.style.width =
+(
+(current)
+/
+questions.length
+*
+100
+)
++
+"%";
+
+}
+
+
+
+function finishGame(){
+
+document
+.getElementById("game")
+.classList.remove(
+"active"
+);
+
+
+document
+.getElementById("result")
+.classList.add(
+"active"
+);
+
+
+document
+.getElementById("finalScore")
+.textContent =
+score + " pts";
+
+
+let message =
+"";
+
+
+if(
+score >= 2800
+){
+
+message =
+"Excellent! Your comparative forms are very strong. 🌟";
+
+}
+else if(
+score >= 2200
+){
+
+message =
+"Great work! You understand comparative adjectives very well. 👏";
+
+}
+else if(
+score >= 1500
+){
+
+message =
+"Good job! Review irregular comparative forms and spelling rules. 💪";
+
+}
+else
+{
+
+message =
+"Keep practicing! Use the grammar guide and play again. 🚀";
+
+}
+
+
+document
+.getElementById("resultText")
+.textContent =
+message;
+
+}
+
+</script>
+
+</body>
+</html>
